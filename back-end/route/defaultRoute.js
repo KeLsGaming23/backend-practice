@@ -1,4 +1,7 @@
 import express from 'express'
 import { connectionController } from '../controller/connectionController'
 
-const router = express.Router();
+const defaultRouter = express.Router();
+router.get("/", connectionController);
+
+export default defaultRouter;
