@@ -1,7 +1,7 @@
 import express from 'express'
-import { connectionController } from '../controller/connectionController'
+import { connectionController } from '../controller/connectionController.js'
 
-const defaultRouter = express.Router();
-router.get("/", connectionController);
+const defaultRoute = express.Router();
+defaultRoute.get("/", connectionController);
 
-export default defaultRouter;
+export default defaultRoute;

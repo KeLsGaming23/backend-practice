@@ -1,4 +1,4 @@
-import connectionPool from "../config/connectionPool";
+import connectionPool from "../config/connectionPool.js";
 
 export const connectionController = (req, res) => {
 
