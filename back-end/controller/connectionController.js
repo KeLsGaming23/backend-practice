@@ -40,4 +40,18 @@ const getOnlyUserAndIdController = async(req, res) => {
     }
 }
 
-export { connectionController, getAllUserController, getOnlyUserAndIdController }
+const getUserByIdController = async(req, res) => {
+    try {
+        const { id } = req.params;
+        const getAllUserQuery = "SELECT id, username FROM users WHERE id = ?";
+        const [results] = await connectionPool.promise().query(getAllUserQuery, [id]);
+        if (results.length === 0) {
+            return res.status(404).json({message: "No users found"});
+        }
+        res.status(200).json(results[0]);
+    } catch (error) {
+        res.status(500).json({message: "Server Error"});
+    }
+}
+
+export { connectionController, getAllUserController, getOnlyUserAndIdController, getUserByIdController }
