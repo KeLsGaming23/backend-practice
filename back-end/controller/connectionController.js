@@ -9,8 +9,22 @@ const connectionController = (req, res) => {
         }
         console.log("Database connection verified!");
         connection.release();
-        res.json({message: "Successfully connected to the database!"});
+        res.json({ message: "Successfully connected to the database!" });
     });
 }
 
-export {connectionController}
+const getAllUserController = async (req, res) => {
+    try {
+
+        const getAllUserQuery = "SELECT * FROM users";
+        const [results] = await connectionPool.promise().query(getAllUserQuery);
+        if (results.length === 0) {
+            return res.status(404).json({message: "No users found"});
+        }
+        res.status(200).json(results);
+    } catch (error) {
+        res.status(500).json({message: "Server Error"});
+    }
+}
+
+export { connectionController, getAllUserController }
