@@ -14,4 +14,18 @@ const connectionController = (req, res) => {
     });
 }
 
-export {  connectionController }
+const getAllUsersController = async(req, res) => {
+    try {
+        const getAllUserQuery = "SELECT * FROM users";
+        const [results] = await connectionPool.promise().query(getAllUserQuery);
+        if(results.length === 0){
+            return res.status(400).json({error: "No users Found"});
+        }
+        res.status(200).json(results);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({error: "Server Error"});
+    }
+}
+
+export {  connectionController, getAllUsersController }
