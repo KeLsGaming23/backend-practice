@@ -43,4 +43,19 @@ const getOnlyUserNameAndIdController = async(req, res) => {
         res.status(500).json({message: "Server Error"});
     }
 }
-export { connectionController, getAllUsersController, getOnlyUserNameAndIdController }
+
+const getUserByIdController = async(req, res) => {
+    try {
+        const { id } = req.params;
+        const getAllUserQuery = "SELECT id, username FROM users WHERE id=?";
+        const [results] = await connectionPool.promise().query(getAllUserQuery, [id]);
+        if (results.length === 0) {
+            return res.status(404).json({message: "No user found"});
+        }
+        res.json(results[0]);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({message: "Server Error"});
+    }
+}
+export { connectionController, getAllUsersController, getOnlyUserNameAndIdController, getUserByIdController }
