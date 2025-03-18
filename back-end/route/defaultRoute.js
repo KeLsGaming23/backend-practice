@@ -1,7 +1,8 @@
 import express from 'express'
-import { connectionController } from '../controller/connectionController.js'
+import { connectionController, getAllUsersController } from '../controller/connectionController.js'
 
 const defaultRoute = express.Router();
 defaultRoute.get("/", connectionController);
+defaultRoute.get("/display-users", getAllUsersController);
 
 export default defaultRoute;
