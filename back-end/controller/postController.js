@@ -2,8 +2,7 @@ import connectionPool from "../config/connectionPool.js";
 
 
 const postController = async (req, res) => {
-    try {
-        console.log("Received body:", req.body); // Debugging log
+    try { // Debugging log
         const { title, description } = req.body;
 
         //validate
