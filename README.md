@@ -93,12 +93,3 @@ Modify `index.js` to include **middleware**, **database connection**, and an **A
         console.log("Connected to backend");
     });
 
-### **8️⃣ Create a `.env` File**
-
-Make sure to create a `.env` file in the root directory and add the following environment variables:
-
-    DB_HOST=your_database_host
-    DB_USER=your_database_user
-    DB_PASSWORD=your_database_password
-    DB_NAME=your_database_name
-    DB_CONNECTION_LIMIT=10
