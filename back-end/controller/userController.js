@@ -34,4 +34,37 @@ const registerUserController = async (req, res) => {
     }
 }
 
-export {registerUserController}
+const loginUserController = async (req, res) => {
+    try {
+        const {email, password} = req.body;
+        if(!email || !password){
+            return res.status(404).json({message: "All Fields are required!"});
+        }
+        const userEmailQuery = "SELECT * FROM user_data WHERE email = ?";
+        const [userEmail] = await connectionPool.promise().query(userEmailQuery, [email]);
+
+        if(userEmail.length === 0){
+            return res.status(404).json({message: "Invalid email"});
+        }
+
+        const user = userEmail[0];
+
+        const isMatch = await bcrypt.compare(password, user.password);
+        if (!isMatch) {
+            return res.status(404).json({message: "Invalid Password"});
+        }
+
+        const token = jwt.sign(
+            {userId: user.id, username: user.username, email: user.email},
+            process.env.JWT_SECRET,
+            {expiresIn: '1h'}
+        );
+
+        res.status(200).json({message: `Welcome ${user.username} with email: ${user.email}`, token});
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({message: "Server Error"});
+    }
+}
+
+export {registerUserController, loginUserController}
